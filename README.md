@@ -2,6 +2,6 @@
 
 apt install -y git
 
-git clone https://github.com/davigalucio/metatrader5nolinuxdebian12.git
+git clone https://github.com/davigalucio/metatrader5-no-linux-debian12.git
 
-sh metatrader5nolinuxdebian12/INSTALL.SH
+sh metatrader5-no-linux-debian12/INSTALL.SH
