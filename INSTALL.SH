@@ -1,5 +1,7 @@
 DEBIAN_VERSION_CODENAME=$(cat /etc/*release* | grep VERSION_CODENAME | cut -d '=' -f 2)
 
+apt install sudo wget -y
+
 sudo dpkg --add-architecture i386 
 sudo mkdir -pm755 /etc/apt/keyrings
 sudo wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key
@@ -7,8 +9,6 @@ sudo wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/debian/
 
 sudo apt update
 sudo apt install --install-recommends winehq-stable -y
-
-
 
 apt-get install apt-transport-https software-properties-common sudo unzip wget git aptitude curl make cmake gcc dirmngr gnupg gnupg2 gnupg1 build-essential -y
 apt-get --no-install-recommends install xorg lightdm lxde-core -y
