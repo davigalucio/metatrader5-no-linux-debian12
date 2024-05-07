@@ -1,5 +1,23 @@
 DEBIAN_VERSION_CODENAME=$(cat /etc/*release* | grep VERSION_CODENAME | cut -d '=' -f 2)
 
+mv /etc/apt/sources.list /etc/apt/sources.list.bkp
+
+cat <<EOF>> /etc/apt/sources.list.d/debian.sources
+Types: deb deb-src
+URIs: http://deb.debian.org/debian 
+Suites: $DEBIAN_VERSION_CODENAME $DEBIAN_VERSION_CODENAME-updates $DEBIAN_VERSION_CODENAME-backports
+Components: main contrib non-free non-free-firmware
+Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
+
+Types: deb deb-src
+URIs: http://deb.debian.org/debian-security
+Suites: $DEBIAN_VERSION_CODENAME-security
+Components: main contrib non-free non-free-firmware
+Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
+EOF
+
+apt update && apt upgrade -y && systemctl daemon-reload
+
 apt install sudo wget -y
 
 sudo dpkg --add-architecture i386 
@@ -8,7 +26,7 @@ sudo wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-bui
 sudo wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/debian/dists/$DEBIAN_VERSION_CODENAME/winehq-$DEBIAN_VERSION_CODENAME.sources
 
 sudo apt update
-sudo apt install --install-recommends winehq-stable -y
+sudo apt install --install-recommends winehq-stable winetricks -y
 
 apt-get install apt-transport-https software-properties-common unzip make cmake gcc dirmngr gnupg gnupg2 gnupg1 build-essential -y
 apt-get --no-install-recommends install xorg lightdm lxde-core -y
